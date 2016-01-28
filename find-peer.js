@@ -80,7 +80,7 @@ if (cli.secret) {
   var secret = cli.secret;
   sha1Secret = crypto.createHash('sha1').update(secret).digest('hex');
   console.log('secret:', sha1Secret);
-  dht.announce(sha1Secret, 31337);
+  dht.announce(sha1Secret, serverPort);
   dht.lookup(sha1Secret);
 
   dht.on('peer', function (newPeer, infoHash, from) {
