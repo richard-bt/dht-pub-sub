@@ -67,8 +67,9 @@ if (cli.secret) {
 
   dht.on('peer', function (newPeer, infoHash, from) {
     //console.log(Peers.get(newPeer.host + ':' + newPeer.port));
-    if (newPeer.host != externalIP && newPeer.port != 31337 && !Peers.get(newPeer.host + ':' + newPeer.port)) {
       console.log('New Peer:', newPeer);
+    if (newPeer.host != externalIP && newPeer.port == 31337 && !Peers.get(newPeer.host + ':' + newPeer.port)) {
+      console.log('Actual New Peer:', newPeer);
       console.log('From:', from.address, from.port);
       var newPeerModel = new Peer({host:newPeer.host, port:newPeer.port});
       Peers.add(newPeerModel);
