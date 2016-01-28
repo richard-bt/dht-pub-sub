@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "bittorrent-dht": "^6.3.2"
+  }
+}
