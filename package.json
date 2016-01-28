@@ -2,6 +2,7 @@
   "dependencies": {
     "backbone": "^1.2.3",
     "bittorrent-dht": "^6.3.2",
+    "canihazip": "^1.0.1",
     "commander": "^2.9.0",
     "lodash": "^4.0.1"
   }
