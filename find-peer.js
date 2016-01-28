@@ -52,6 +52,15 @@ dht.listen(20000, function () {
   console.log('now listening')
 })
 
+cli
+  .version('0.0.1')
+  .option('-s, --secret [secret]')
+  .option('-p, --port [port]')
+
+cli.parse(process.argv);
+
+var serverPort = cli.port || 31337;
+
 var server = net.createServer(function(socket) {
   socket.write('Hello 31337 h4xor');
 
@@ -65,13 +74,7 @@ var server = net.createServer(function(socket) {
     }
   });
 });
-server.listen(31337, '0.0.0.0');
-
-cli
-  .version('0.0.1')
-  .option('-s, --secret [secret]')
-
-cli.parse(process.argv);
+server.listen(serverPort, '0.0.0.0');
 
 if (cli.secret) {
   var secret = cli.secret;
@@ -81,7 +84,7 @@ if (cli.secret) {
   dht.lookup(sha1Secret);
 
   dht.on('peer', function (newPeer, infoHash, from) {
-    if (newPeer.host != externalIP && newPeer.port == 31337 && !Peers.get(newPeer.host + ':' + newPeer.port)) {
+    if (newPeer.host != externalIP && newPeer.port >= 31337 && newPeer.port <= 31437 && !Peers.get(newPeer.host + ':' + newPeer.port)) {
       console.log('Actual New Peer:', newPeer);
       console.log('From:', from.address, from.port);
       var newPeerModel = new Peer({host:newPeer.host, port:newPeer.port});
