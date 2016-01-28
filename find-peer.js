@@ -50,6 +50,7 @@ var server = net.createServer(function(socket) {
   socket.write('Hello 31337 h4xor');
   socket.pipe('socket');
 });
+server.listen(31337, '0.0.0.0');
 
 cli
   .version('0.0.1')
