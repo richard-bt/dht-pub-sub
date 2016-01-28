@@ -6,6 +6,7 @@ var Backbone = require('backbone')
 var net = require('net')
 var canihazip = require('canihazip')
 var deasync = require('deasync')
+var readline = require('readline')
 
 // THIS IS SUPER GROSS, I'M SORRY
 var done = false;
@@ -59,6 +60,7 @@ var server = net.createServer(function(socket) {
     if (assumedString.toUpperCase() === 'PING') {
       socket.write('PONG');
     } else {
+      console.log("IN:", assumedString);
       socket.write(assumedString.toUpperCase());
     }
   });
@@ -89,4 +91,14 @@ if (cli.secret) {
   })
 }
 
+var rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
 
+rl.on('line', function(line){
+  Peers.each(function(peer) {
+    var peerSocket = peer.get('socket');
+    peerSocket.write(line);
+  });
+});
