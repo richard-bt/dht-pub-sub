@@ -27,14 +27,14 @@ var PeersCollection = Backbone.Collection.extend({
 var Peers = new PeersCollection();
 
 Peers.on('add', function(peer) {
-  var socket = net.createConnection(peer.get('host'), peer.get('port'));
+  var socket = net.createConnection(peer.get('port'), peer.get('host'));
   peer.set('socket', socket);
   socket.on('data', function(data) {
-    console.log("GOT DATA", data);
+    console.log("GOT DATA", data.toString());
   }).on('connect', function() {
-    socket.write('HELLO PING');
-  }).on('error', function() {
-    console.log('UNABLE TO CONNECT TO PEER');
+    socket.write('ping');
+  }).on('error', function(error) {
+    console.log('UNABLE TO CONNECT TO PEER', error);
   }).on('end', function() {
     console.log('SOCKET DONE')
   });
@@ -50,7 +50,12 @@ var server = net.createServer(function(socket) {
   socket.write('Hello 31337 h4xor');
 
   socket.on('data', function(data) {
-    socket.write(data.toString().toUpperCase());
+    var assumedString = data.toString();
+    if (assumedString.toUpperCase() === 'PING') {
+      socket.write('PONG');
+    } else {
+      socket.write(data.toString().toUpperCase());
+    }
   });
 });
 server.listen(31337, '0.0.0.0');
