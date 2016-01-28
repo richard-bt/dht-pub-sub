@@ -1,13 +1,22 @@
 var DHT = require('bittorrent-dht')
+var cli = require('commander')
+var crypto = require('crypto')
 
-var hash = 'e3821b9539cacff680e418124272177c47477157'
-
-var dht = new DHT()
+var dht = new DHT();
 
 dht.listen(20000, function () {
-  console.log('now listening')
+  console.log('now listening');
 })
 
-dht.announce(hash, 31337, function(result) {
-  console.log('RESULT OF ANNOUNCE', result);
-});
+cli
+  .version('0.0.1')
+  .option('-s, --secret [secret]')
+
+cli.parse(process.argv);
+
+if (cli.secret) {
+  var secret = cli.secret;
+  sha1Secret = crypto.createHash('sha1').update(secret).digest('hex');
+  console.log('secret:', sha1Secret);
+  dht.announce(sha1Secret, 31337);
+}
