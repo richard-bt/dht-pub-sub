@@ -48,7 +48,6 @@ dht.listen(20000, function () {
 
 var server = net.createServer(function(socket) {
   socket.write('Hello 31337 h4xor');
-  socket.pipe('socket');
 
   socket.on('data', function(data) {
     socket.write(data.toString().toUpperCase());
