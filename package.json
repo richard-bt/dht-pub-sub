@@ -4,6 +4,7 @@
     "bittorrent-dht": "^6.3.2",
     "canihazip": "^1.0.1",
     "commander": "^2.9.0",
+    "deasync": "^0.1.4",
     "lodash": "^4.0.1"
   }
 }
