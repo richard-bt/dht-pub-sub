@@ -5,8 +5,13 @@ var _ = require('lodash')
 var Backbone = require('backbone')
 var net = require('net')
 var canihazip = require('canihazip')
+var deasync = require('deasync')
 
-var externalIP = canihazip().then(function(ip){return ip});
+// THIS IS SUPER GROSS, I'M SORRY
+var done = false;
+var externalIP = canihazip().then(function(ip){done=true;externalIP=ip});
+deasync.loopWhile(function(){return !done});
+console.log("ExternalIP:", externalIP);
 
 var Peer = Backbone.Model.extend({
   idAttribute: 'customID',
@@ -54,7 +59,7 @@ var server = net.createServer(function(socket) {
     if (assumedString.toUpperCase() === 'PING') {
       socket.write('PONG');
     } else {
-      socket.write(data.toString().toUpperCase());
+      socket.write(assumedString.toUpperCase());
     }
   });
 });
