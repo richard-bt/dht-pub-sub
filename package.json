@@ -1,5 +1,8 @@
 {
   "dependencies": {
-    "bittorrent-dht": "^6.3.2"
+    "backbone": "^1.2.3",
+    "bittorrent-dht": "^6.3.2",
+    "commander": "^2.9.0",
+    "lodash": "^4.0.1"
   }
 }
