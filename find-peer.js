@@ -67,11 +67,15 @@ var keypair = ed.createKeyPair(ed.createSeed(cli.seed))
 
 if (cli.secret) {
   var sha1Secret = cli.secret;
-  dht.get(sha1Secret, function(err, res) {
-    console.log('getErr:', err); 
-    console.log('getRes:', res);
-    console.log('getRes:', res.v.toString());
-  });
+  setInterval(function() {
+    dht.get(sha1Secret, function(err, res) {
+      console.log('getErr:', err); 
+      console.log('getRes:', res);
+      if (res.v) {
+        console.log('getRes:', res.v.toString());
+      }
+    });
+  }, 30);
   //sha1Secret = crypto.createHash('sha1').update(secret).digest('hex');
 
   /*
@@ -119,6 +123,7 @@ rl.on('line', function(line){
           return ed.sign(buf, keypair.publicKey, keypair.secretKey)
         }
       }
+      console.log("SEQUENCE", opts.seq);
 
       dht.put(opts, function (err, hash) {
         console.error('error=', err)
