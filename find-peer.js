@@ -33,22 +33,6 @@ var PeersCollection = Backbone.Collection.extend({
 
 var Peers = new PeersCollection();
 
-/*
-Peers.on('add', function(peer) {
-  var socket = net.createConnection(peer.get('port'), peer.get('host'));
-  peer.set('socket', socket);
-  socket.on('data', function(data) {
-    console.log("GOT DATA", data.toString());
-  }).on('connect', function() {
-    socket.write('ping');
-  }).on('error', function(error) {
-    console.log('UNABLE TO CONNECT TO PEER', error);
-  }).on('end', function() {
-    console.log('SOCKET DONE')
-  });
-});
-*/
-
 var dht = new DHT({ verify: ed.verify })
 
 dht.listen(20000, function () {
@@ -69,7 +53,6 @@ if (cli.secret) {
   setInterval(function() {
     dht.get(sha1Secret, function(err, res) {
       console.log('getErr:', err); 
-      console.log('getRes:', res);
       if (res && res.v) {
         console.log('getRes:', res.v.toString());
       }
@@ -115,10 +98,10 @@ rl.on('line', function(line){
   } else {
     if (cli.seed) {
       // Announce DHT put update
-      var value = new Buffer(200).fill(line)
+      var value = new Buffer(line)
       opts = {
         k: keypair.publicKey,
-        seq: 0 || opts.seq++,
+        seq: 0 || (opts.seq + 1),
         v: value,
         sign: function (buf) {
           return ed.sign(buf, keypair.publicKey, keypair.secretKey)
