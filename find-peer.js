@@ -50,7 +50,7 @@ Peers.on('add', function(peer) {
 });
 */
 
-var dht = new DHT()
+var dht = new DHT({ verify: ed.verify })
 
 dht.listen(20000, function () {
   console.log('now listening')
