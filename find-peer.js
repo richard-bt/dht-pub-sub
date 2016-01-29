@@ -74,7 +74,7 @@ if (cli.secret) {
         console.log('getRes:', res.v.toString());
       }
     });
-  }, 30000);
+  }, 10000);
   //sha1Secret = crypto.createHash('sha1').update(secret).digest('hex');
 
   /*
