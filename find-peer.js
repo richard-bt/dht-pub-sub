@@ -68,8 +68,9 @@ var keypair = ed.createKeyPair(ed.createSeed(cli.seed))
 if (cli.secret) {
   var sha1Secret = cli.secret;
   dht.get(sha1Secret, function(err, res) {
-    console.log('err:', err); 
-    console.log('res:', res);
+    console.log('getErr:', err); 
+    console.log('getRes:', res);
+    console.log('getRes:', res.v.toString());
   });
   //sha1Secret = crypto.createHash('sha1').update(secret).digest('hex');
 
