@@ -20,8 +20,7 @@ var Peer = Backbone.Model.extend({
   idAttribute: 'customID',
   defaults: {
     host: null,
-    port: null,
-    socket: null
+    port: null
   },
   initialize: function() {
     this.set({customID: this.get('host') + ':' + this.get('port')});
@@ -89,6 +88,7 @@ if (cli.secret) {
 if (cli.seed) {
 }
 
+/*
 dht.on('peer', function (newPeer, infoHash, from) {
   if (newPeer.host != externalIP && newPeer.port >= 31337 && newPeer.port <= 31437 && !Peers.get(newPeer.host + ':' + newPeer.port)) {
     console.log('Actual New Peer:', newPeer);
@@ -98,6 +98,7 @@ dht.on('peer', function (newPeer, infoHash, from) {
     console.log('total peers', Peers.length);
   }
 })
+*/
 
 var rl = readline.createInterface({
   input: process.stdin,
