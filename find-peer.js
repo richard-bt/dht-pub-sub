@@ -70,11 +70,11 @@ if (cli.secret) {
     dht.get(sha1Secret, function(err, res) {
       console.log('getErr:', err); 
       console.log('getRes:', res);
-      if (res.v) {
+      if (res && res.v) {
         console.log('getRes:', res.v.toString());
       }
     });
-  }, 30);
+  }, 30000);
   //sha1Secret = crypto.createHash('sha1').update(secret).digest('hex');
 
   /*
