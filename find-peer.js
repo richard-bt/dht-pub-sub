@@ -35,7 +35,7 @@ var Peers = new PeersCollection();
 
 var dht = new DHT({ verify: ed.verify })
 
-dht.listen(20000, function () {
+dht.listen(function () {
   console.log('now listening')
 })
 
